@@ -10,20 +10,22 @@ namespace Nile.Host
         {
             bool quit = false;
             while (!quit)
-            { 
+            {
+                //Equality
+                bool isEqual = quit.Equals(10);
                     //Display menu
                     char choice = DisplayMenu();
 
                 //Process menu selection
-                switch (choice)
+                switch (Char.ToUpper(choice))
                 {
-                    case 'l':
+                    //case 'l':
                     case 'L': ListProducts(); break;
 
-                    case 'a':
+                    //case 'a':
                     case 'A': AddProducts(); break;
 
-                    case 'q':
+                    //case 'q':
                     case 'Q': quit = true; break;
                     
                 };
@@ -51,6 +53,7 @@ namespace Nile.Host
 
                 string value = Console.ReadLine();
 
+                //if (Decimal.TryParse(value, out decimal result)) && result >= MinValue
                 //return result;
                 if (Decimal.TryParse(value, out decimal result))
                 {
@@ -59,8 +62,10 @@ namespace Nile.Host
                         return result;
 
                 };
-
-                Console.WriteLine("Value must be >= {0}"+ minValue);
+                //Formatting strings
+                //Consol.WriteLine("Value must be >= {0}"+ minValue);
+                string msg= String.Format("Value must be >= {0}" + minValue);
+                Console.WriteLine(msg);
             } while (true);
         }
 
@@ -76,6 +81,7 @@ namespace Nile.Host
                 if (!isRequired || value != "")
                     return value;
 
+                
                 Console.WriteLine("Value is required");
             } while (true);
         }
@@ -90,11 +96,27 @@ namespace Nile.Host
 
                 string input = Console.ReadLine();
 
-                if (input == "L" || input == "l")
+                //Remove whitespace
+                input = input.Trim();
+                //input.ToLower();
+                input = input.ToUpper();
+
+                //Padding
+                //input.PadLeft(10);
+
+                //Starts with
+                //input.StartsWith(@"\");
+                //input.EndsWith(@"\");
+
+                //Substring
+                //string newValue = input.Substring(0, 10);
+
+                //if (input == "L") 
+                if (String.Compare(input, "L", true) == 0)
                     return input[0];
                 else if (input == "A")
                     return input[0];
-                else if (input == "Q" || input == "q")
+                else if (input == "Q")
                     return input[0];
                 
                 Console.WriteLine("Please choose a valid option");
@@ -109,11 +131,33 @@ namespace Nile.Host
 
         {
             //Are there any products?
-            if (_name != null && _name != "")
+            //if (_name != null && _name != String.Empty)
+            //if (_name != null && _name.Length == 0)
+            //if (_name != null && _name != "")
+            if (!String.IsNullOrEmpty(_name))
             {
-                //Display a product
-                Console.WriteLine(_name);
-                Console.WriteLine(_price);
+                //Display a product - name [$price]
+                //                      <description>
+
+                //String formatting
+                //var msg = String.Format("{0} [${1}]", _name, _price);
+
+                //String concatenation
+                //var msg = _name + " [$"+ _price + "]";
+
+                //String concat part2
+                //var msg = String.Concat(_name, " [$", _price, "]");
+
+                //String interpolation
+                string msg = $"{_name} [${_price}]";
+                Console.WriteLine(msg);
+
+                //Console.WriteLine(_name);
+                //Console.WriteLine(_price);
+
+                if (!String.IsNullOrEmpty(_description))
+                    Console.WriteLine(_description);
+                      
                 Console.WriteLine(_description);
             } else
                 Console.WriteLine("No products");

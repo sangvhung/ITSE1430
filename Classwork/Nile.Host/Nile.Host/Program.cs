@@ -20,14 +20,22 @@ namespace Nile.Host
                 switch (Char.ToUpper(choice))
                 {
                     //case 'l':
-                    case 'L': ListProducts(); break;
+                    case 'L':
+                    ListProducts();
+                    break;
 
                     //case 'a':
-                    case 'A': AddProducts(); break;
+                    case 'A':
+                    AddProducts();
+                    break;
+
 
                     //case 'q':
-                    case 'Q': quit = true; break;
-                    
+                    case 'Q':
+                    quit = true;
+                    break;
+                    default:
+                    break;
                 };
             };
 

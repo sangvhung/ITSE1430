@@ -55,7 +55,7 @@ namespace SangHung.MovieLib.Host
 
             s_length = ReadDecimal("Enter a optional length (in minutes):", 0);
 
-            s_owned = ReadString(" Do you own this movie? (Y/N))", true);
+            s_owned = ReadString("Do you own this movie? (Y/N))", true);
 
 
         }
@@ -113,6 +113,10 @@ namespace SangHung.MovieLib.Host
 
             private static char DisplayMenu()
         {
+
+            string owned = "Y";
+            string wishlist = "N";
+
             do
             {
                 Console.WriteLine("L)ist Movies");
@@ -121,7 +125,8 @@ namespace SangHung.MovieLib.Host
                 Console.WriteLine("Q)uit");
 
                 string input = Console.ReadLine();
-
+                
+                
                 input = input.Trim();
                 input = input.ToUpper();
 
@@ -133,9 +138,9 @@ namespace SangHung.MovieLib.Host
                     return input[0];
                 else if (input == "Q")
                     return input[0];
+               
                 
-                  
-
+              
                 Console.WriteLine("Please choose a valid option");
 
 
@@ -148,6 +153,10 @@ namespace SangHung.MovieLib.Host
 
         static void ListMovies()
         {
+
+            
+                
+
             if (!String.IsNullOrEmpty(s_title))
             {
             string msg = $"{s_title}";
@@ -162,7 +171,8 @@ namespace SangHung.MovieLib.Host
             string msg3 = $"Status = {s_owned}";
                     Console.WriteLine(msg3);
 
-            
+                Console.WriteLine("\nPress ENTER to continue");
+                Console.ReadLine();
 
 
             } else
@@ -175,7 +185,7 @@ namespace SangHung.MovieLib.Host
         static string s_length;
         static string s_owned;
         static string s_delete;
-
+        
     }
 
 

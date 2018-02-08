@@ -64,12 +64,21 @@ namespace SangHung.MovieLib.Host
         static void RemoveMovie()
         {
             s_delete = ReadString("Are you sure you want to delete the movie (Y/N)?", true);
+
             do
             {
-                string value = Console.ReadLine();
-                Console.WriteLine("Movie has been deleted");
+                
 
-            } while (false);
+                string value = Console.ReadLine();
+
+               
+
+                string msg = String.Format("Movie has been deleted");
+                Console.WriteLine(msg);
+            } while (true);
+                   
+
+            
 
             
         }
@@ -97,6 +106,10 @@ namespace SangHung.MovieLib.Host
 
             private static string ReadString( string message, bool isRequired )
         {
+            var Y = s_owned;
+            object Wishlist = null;
+            var N = Wishlist;
+
             do
             {
                 Console.WriteLine(message);
@@ -114,8 +127,7 @@ namespace SangHung.MovieLib.Host
             private static char DisplayMenu()
         {
 
-            string owned = "Y";
-            string wishlist = "N";
+            
 
             do
             {
@@ -185,7 +197,8 @@ namespace SangHung.MovieLib.Host
         static string s_length;
         static string s_owned;
         static string s_delete;
-        
+
+        public static bool Y { get; private set; }
     }
 
 

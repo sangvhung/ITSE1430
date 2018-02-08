@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace Nile.Windows
 {
     public partial class MainForm : Form
@@ -16,5 +17,20 @@ namespace Nile.Windows
         {
             InitializeComponent();
         }
+
+        protected override void OnLoad( EventArgs e )
+        {
+            base.OnLoad(e);
+
+            
+
+            var product = new Product();
+            product.Name = "Product A";
+
+            var productb = new Product();
+            productb.Name = "ProductB";
+            productb.Description = product.Description;
+        }
     }
+
 }

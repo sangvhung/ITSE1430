@@ -22,14 +22,21 @@ namespace Nile.Windows
         {
             base.OnLoad(e);
 
-            
-
             var product = new Product();
-            product.Name = "Product A";
+
+            var name = product.GetName();
+            //product.Name = "Product A";
+            product.SetName("Product A");
+
+            var error = product.Validate();
+
+            var str = product.ToString();
 
             var productb = new Product();
-            productb.Name = "ProductB";
-            productb.Description = product.Description;
+            //productb.Name = "ProductB";
+            //productb.SetName("ProductB");
+            //productb.Description = product.Description;
+            error = productB.Validate();
         }
     }
 

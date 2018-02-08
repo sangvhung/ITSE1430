@@ -63,24 +63,20 @@ namespace SangHung.MovieLib.Host
 
         static void RemoveMovie()
         {
-            s_delete = ReadString("Are you sure you want to delete the movie (Y/N)?", true);
+            s_delete = ReadString("Are you sure you want to delete the movie (Y/N)?",true);
+
+            Console.WriteLine("No changes made");
 
             do
             {
+
+                Console.WriteLine("Movie has been deleted");
+                break;
                 
 
-                string value = Console.ReadLine();
-
-               
-
-                string msg = String.Format("Movie has been deleted");
-                Console.WriteLine(msg);
             } while (true);
-                   
-
             
-
-            
+           
         }
 
         private static string ReadDecimal( string message, decimal minValue )
@@ -106,9 +102,7 @@ namespace SangHung.MovieLib.Host
 
             private static string ReadString( string message, bool isRequired )
         {
-            var Y = s_owned;
-            object Wishlist = null;
-            var N = Wishlist;
+            
 
             do
             {
@@ -198,7 +192,7 @@ namespace SangHung.MovieLib.Host
         static string s_owned;
         static string s_delete;
 
-        public static bool Y { get; private set; }
+   
     }
 
 

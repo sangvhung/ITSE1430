@@ -11,8 +11,51 @@ namespace Nile
     public class Product
     {
         internal decimal DiscountPercentage = 0.10M;
-        /// <summary>Get the product name.</summary>
-        /// <returns>The name.</returns>
+                
+        public string Description
+        {
+            get { return _description ?? ""; }
+            set { _description = value ??""; }
+        }
+        /// <summary>Gets or sets the name.</summary>
+        /// <returns></returns>
+        public string Name
+        {
+        get { return _name ??""; }
+        set { _name = value; }
+
+        }
+
+        //Using auto property here
+        public decimal Price
+        {
+            //get { return _price; }
+            //set { _price = value; }
+            get; set;
+        } = 0;
+
+        //public int ShowingOffAccessibility
+        //{
+        //    get { }
+        //    internal set { }
+        //}
+
+        public decimal ActualPrice
+        {
+            get 
+            {
+                if (isDiscontinued)
+                    return Price - (Price * DiscountPercentage);
+                return Price;
+            }
+            //set { }
+        }
+        public bool isDiscontinued
+        {
+            get;set;
+            //get { return _isDiscontinued; }
+            //set { _isDiscontinued = value; }
+        }
         public string GetName()
         {
             return _name;
@@ -33,7 +76,7 @@ namespace Nile
                 return "Name cannot be empty";
 
             ///Price >=0
-            if (_price < 0)
+            if (Price < 0)
                 return "Price must be >=0";
             return "";
         }
@@ -43,7 +86,7 @@ namespace Nile
         /// <summary>Name of the product</summary>
         private string _name;
         private string _description;
-        private decimal _price;
+        //private decimal _price; With auto property doesnt need this
         private bool _isDiscontinued;
 
     }

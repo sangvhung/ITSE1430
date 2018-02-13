@@ -24,9 +24,18 @@ namespace Nile.Windows
 
             var product = new Product();
 
-            var name = product.GetName();
-            //product.Name = "Product A";
-            product.SetName("Product A");
+            Decimal.TryParse("123", out var price);
+            product.Price = price;
+
+            var name = product.Name;
+            //var name = product.GetName();
+            product.Name = "Product A";
+            product.Price = 50;
+            product.isDiscontinued = true;
+
+            //product.ActualPrice = 10;
+            var price2 = product.ActualPrice;
+            //product.SetName("Product A");
 
             var error = product.Validate();
 
@@ -34,10 +43,12 @@ namespace Nile.Windows
 
             var productb = new Product();
             //productb.Name = "ProductB";
-            //productb.SetName("ProductB");
+            productb.SetName("Product B");
             //productb.Description = product.Description;
-            error = productB.Validate();
+            error = productb.Validate();
         }
+
+     
     }
 
 }

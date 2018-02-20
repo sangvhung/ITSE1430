@@ -12,6 +12,22 @@ namespace Nile
 {
     public partial class ProductDetailForm : Form
     {
+        protected override void OnLoad( EventArgs e )
+        {
+            //important logic to load product; if no product form doesnt load
+            base.OnLoad(e);
+
+            if (Product != null)
+            { 
+            //Load Product
+            _txtName.Text = Product.Name;
+            _TxtDescription.Text = Product.Description;
+            _TxtPrice.Text = Product.Price.ToString();
+            _CheckisDiscontinued.Checked = Product.isDiscontinued;
+            };
+        }
+
+
         public ProductDetailForm()
         {
             InitializeComponent();
@@ -42,19 +58,19 @@ namespace Nile
             product.Name = _txtName.Text;
             product.Description = _textDescription.Text;
             product.Price = ConvertToPrice(_textPrice);
-            Product.isDiscontinued = _CheckisDiscontinued.Checked;
+            product.isDiscontinued = _CheckisDiscontinued.Checked;
 
             //return from form
             Product = product;
             DialogResult = DialogResult.OK;
             //DialogResult = DialogResult.None;
             Close();
-            //Save button to close
+            //Save button to close logic
         }
 
         private decimal ConvertToPrice (TextBox control)
         {
-            if (Decimal.TryParse(Control.Text, out var price))
+            if (Decimal.TryParse(control.Text, out var price))
                 return price;
 
             return -1;

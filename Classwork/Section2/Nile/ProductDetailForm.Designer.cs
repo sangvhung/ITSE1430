@@ -28,7 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this._textName = new System.Windows.Forms.TextBox();
+            this.components = new System.ComponentModel.Container();
+            this._Name = new System.Windows.Forms.TextBox();
             this._textDescription = new System.Windows.Forms.TextBox();
             this._textPrice = new System.Windows.Forms.TextBox();
             this._CheckisDiscontinued = new System.Windows.Forms.CheckBox();
@@ -37,16 +38,20 @@
             this._txtName = new System.Windows.Forms.Label();
             this._TxtDescription = new System.Windows.Forms.Label();
             this._TxtPrice = new System.Windows.Forms.Label();
+            this._errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this._errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
-            // _textName
+            // _Name
             // 
-            this._textName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this._Name.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this._textName.Location = new System.Drawing.Point(78, 52);
-            this._textName.Name = "_textName";
-            this._textName.Size = new System.Drawing.Size(100, 20);
-            this._textName.TabIndex = 0;
+            this._Name.CausesValidation = false;
+            this._Name.Location = new System.Drawing.Point(78, 52);
+            this._Name.Name = "_Name";
+            this._Name.Size = new System.Drawing.Size(100, 20);
+            this._Name.TabIndex = 0;
+            this._Name.Validating += new System.ComponentModel.CancelEventHandler(this._Name_Validating);
             // 
             // _textDescription
             // 
@@ -62,11 +67,13 @@
             // _textPrice
             // 
             this._textPrice.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this._textPrice.CausesValidation = false;
             this._textPrice.Location = new System.Drawing.Point(78, 133);
             this._textPrice.Name = "_textPrice";
             this._textPrice.Size = new System.Drawing.Size(100, 20);
             this._textPrice.TabIndex = 2;
             this._textPrice.TextChanged += new System.EventHandler(this._textPrice_TextChanged);
+            this._textPrice.Validating += new System.ComponentModel.CancelEventHandler(this._textPrice_Validating);
             // 
             // _CheckisDiscontinued
             // 
@@ -93,6 +100,7 @@
             // _buttonCancel
             // 
             this._buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this._buttonCancel.CausesValidation = false;
             this._buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this._buttonCancel.Location = new System.Drawing.Point(184, 196);
             this._buttonCancel.Name = "_buttonCancel";
@@ -130,10 +138,16 @@
             this._TxtPrice.TabIndex = 8;
             this._TxtPrice.Text = "Price";
             // 
+            // _errorProvider
+            // 
+            this._errorProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this._errorProvider.ContainerControl = this;
+            // 
             // ProductDetailForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.CancelButton = this._buttonCancel;
             this.ClientSize = new System.Drawing.Size(284, 233);
             this.Controls.Add(this._TxtPrice);
@@ -144,7 +158,7 @@
             this.Controls.Add(this._CheckisDiscontinued);
             this.Controls.Add(this._textPrice);
             this.Controls.Add(this._textDescription);
-            this.Controls.Add(this._textName);
+            this.Controls.Add(this._Name);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(300, 272);
@@ -153,6 +167,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ProductDetails";
             this.Load += new System.EventHandler(this.ProductDetailForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this._errorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -160,7 +175,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox _textName;
+        private System.Windows.Forms.TextBox _Name;
         private System.Windows.Forms.TextBox _textDescription;
         private System.Windows.Forms.TextBox _textPrice;
         private System.Windows.Forms.CheckBox _CheckisDiscontinued;
@@ -169,5 +184,6 @@
         private System.Windows.Forms.Label _txtName;
         private System.Windows.Forms.Label _TxtDescription;
         private System.Windows.Forms.Label _TxtPrice;
+        private System.Windows.Forms.ErrorProvider _errorProvider;
     }
 }

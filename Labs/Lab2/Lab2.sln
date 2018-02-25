@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SangHung.MovieLib.Windows", "SangHung.MovieLib.Windows\SangHung.MovieLib.Windows.csproj", "{78648754-2F1D-4C03-8C81-AFE7D1043909}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SangHung.MovieLib", "SangHung.MovieLib\SangHung.MovieLib\SangHung.MovieLib.csproj", "{950E9AA4-EC11-4CBC-9B98-07C6F3266336}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{78648754-2F1D-4C03-8C81-AFE7D1043909}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78648754-2F1D-4C03-8C81-AFE7D1043909}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78648754-2F1D-4C03-8C81-AFE7D1043909}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78648754-2F1D-4C03-8C81-AFE7D1043909}.Release|Any CPU.Build.0 = Release|Any CPU
+		{950E9AA4-EC11-4CBC-9B98-07C6F3266336}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{950E9AA4-EC11-4CBC-9B98-07C6F3266336}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{950E9AA4-EC11-4CBC-9B98-07C6F3266336}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{950E9AA4-EC11-4CBC-9B98-07C6F3266336}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6EC4652E-B70F-4E65-923E-93EE7FE62225}
+	EndGlobalSection
+EndGlobal

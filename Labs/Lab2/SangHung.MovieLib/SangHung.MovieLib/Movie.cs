@@ -43,7 +43,7 @@ namespace SangHung.MovieLib
                 return "Title cannot be empty";
 
             //Length >=0 if specified
-            if (_length > 0)
+            if (_length < 0)
                 return "Length must be >=0";
             return "";
         }

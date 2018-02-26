@@ -63,12 +63,32 @@ namespace SangHung.MovieLib.Windows
 
         private void OnMovieEdit( object sender, EventArgs e )
         {
+            if (_movie == null)
+            {
+                MessageBox.Show("No Movie to edit");
+                return;
+            }
+                        
+            var form = new MovieDetailForm(_movie);
 
+            var result = form.ShowDialog(this);
+            if (result != DialogResult.OK)
+                return;
+
+            _movie = form.Movie;
+        }
+        private bool ShowConfirmation(string message, string title)
+        {
+            return MessageBox.Show(this, message, title, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
         }
 
         private void OnMovieDelete( object sender, EventArgs e )
         {
+            if (!ShowConfirmation("Are you sure", "Remove Movie"))
+                return;
 
+            MessageBox.Show("Movie has been deleted");
+            _movie = null;
         }
 
         private void OnFileExit( object sender, EventArgs e )

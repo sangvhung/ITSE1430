@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SangHung.MovieLib.Windows", "SangHung.MovieLib.Windows\SangHung.MovieLib.Windows.csproj", "{78648754-2F1D-4C03-8C81-AFE7D1043909}"
+	ProjectSection(ProjectDependencies) = postProject
+		{950E9AA4-EC11-4CBC-9B98-07C6F3266336} = {950E9AA4-EC11-4CBC-9B98-07C6F3266336}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SangHung.MovieLib", "SangHung.MovieLib\SangHung.MovieLib\SangHung.MovieLib.csproj", "{950E9AA4-EC11-4CBC-9B98-07C6F3266336}"
 EndProject

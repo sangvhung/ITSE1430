@@ -11,14 +11,7 @@ namespace SangHung.MovieLib
 {
     partial class AboutMovieLibForm : Form
     {
-        public AboutMovieLibForm( Movie movie )
-        {
-            Movie = movie;
-        }
-        public AboutMovieLibForm( string title ) : this()
-        {
-            Text = title;
-        }
+      
         public AboutMovieLibForm()
         {
             InitializeComponent();
@@ -108,6 +101,6 @@ namespace SangHung.MovieLib
         {
             Close();
         }
-        public Movie Movie { get; set; }
+        
     }
 }

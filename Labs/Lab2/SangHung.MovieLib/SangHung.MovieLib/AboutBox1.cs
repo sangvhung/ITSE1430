@@ -9,11 +9,9 @@ using System.Windows.Forms;
 
 namespace SangHung.MovieLib
 {
-    public partial class AboutMovieLib1 : Form
+    partial class AboutBox1 : Form
     {
-
-
-        public AboutMovieLib1()
+        public AboutBox1()
         {
             InitializeComponent();
             this.Text = String.Format("About {0}", AssemblyTitle);
@@ -97,11 +95,5 @@ namespace SangHung.MovieLib
             }
         }
         #endregion
-
-        private void OnHelpClose( object sender, EventArgs e )
-        {
-            Close();
-        }
     }
-
 }

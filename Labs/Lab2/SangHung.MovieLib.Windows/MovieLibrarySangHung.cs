@@ -98,11 +98,9 @@ namespace SangHung.MovieLib.Windows
 
         private void OnHelpAbout( object sender, EventArgs e )
         {
-           // var form = new AboutMovieLibForm(_movie);
+            var a = new AboutMovieLib1();
+                a.Show();
             
-            
-
-           // _movie = form.Movie;
         }
 
         private Movie _movie;

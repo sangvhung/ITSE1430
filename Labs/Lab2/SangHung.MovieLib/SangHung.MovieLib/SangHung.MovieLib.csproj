@@ -42,6 +42,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutMovieLib.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutMovieLib.Designer.cs">
+      <DependentUpon>AboutMovieLib.cs</DependentUpon>
+    </Compile>
     <Compile Include="Movie.cs" />
     <Compile Include="MovieDetail.cs">
       <SubType>Form</SubType>
@@ -55,6 +61,9 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="AboutMovieLib.resx">
+      <DependentUpon>AboutMovieLib.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MovieDetail.resx">
       <DependentUpon>MovieDetail.cs</DependentUpon>
     </EmbeddedResource>

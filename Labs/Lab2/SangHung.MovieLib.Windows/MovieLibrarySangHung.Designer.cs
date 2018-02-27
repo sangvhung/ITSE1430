@@ -111,7 +111,7 @@
             this._HelpAbout.Name = "_HelpAbout";
             this._HelpAbout.Size = new System.Drawing.Size(107, 22);
             this._HelpAbout.Text = "About";
-            this._HelpAbout.Click += new System.EventHandler(this._HelpAbout_Click);
+            this._HelpAbout.Click += new System.EventHandler(this.OnHelpAbout);
             // 
             // MovieLibrarySangHung
             // 

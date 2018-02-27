@@ -96,9 +96,13 @@ namespace SangHung.MovieLib.Windows
             Close();
         }
 
-        private void _HelpAbout_Click( object sender, EventArgs e )
+        private void OnHelpAbout( object sender, EventArgs e )
         {
+           // var form = new AboutMovieLibForm(_movie);
+            
+            
 
+           // _movie = form.Movie;
         }
 
         private Movie _movie;

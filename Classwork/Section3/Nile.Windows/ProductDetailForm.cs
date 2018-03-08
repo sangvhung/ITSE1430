@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Nile.Windows
@@ -63,14 +64,21 @@ namespace Nile.Windows
                 IsDiscontinued = _chkIsDiscontinued.Checked,
             };
 
-            //Validate
-            var message = product.Validate();
-            if (!String.IsNullOrEmpty(message))
+            //Validate product using IValidatableObject
+            //var message = product.Validate();
+            //if (!String.IsNullOrEmpty(message))
+            //{
+            //    DisplayError(message);
+            //    return;
+            //};
+            var errors = ObjectValidator.Validate(product);
+            if (errors.Count() > 0)
             {
-                DisplayError(message);
+                //Get first error
+                DisplayError(errors.ElementAt(0).ErrorMessage);
                 return;
-            };
-
+            };            
+            
             //Return from form
             Product = product;
             DialogResult = DialogResult.OK;

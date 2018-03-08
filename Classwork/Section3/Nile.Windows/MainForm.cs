@@ -70,12 +70,13 @@ namespace Nile.Windows
             if (result != DialogResult.OK)
                 return;
 
-            RefreshUI();
             //Update the product
             form.Product.Id = product.Id;
             _database.Edit(form.Product, out var message);
             if (!String.IsNullOrEmpty(message))
                 MessageBox.Show(message);
+
+            RefreshUI();
         }
 
         private void OnProductRemove( object sender, EventArgs e )
@@ -92,10 +93,11 @@ namespace Nile.Windows
             if (!ShowConfirmation("Are you sure?", "Remove Product"))                             
                 return;
 
-            RefreshUI();
             //Remove product
             _database.Remove(product.Id);
             //_products[index] = null;
+
+            RefreshUI();
         }        
         
         private void OnHelpAbout( object sender, EventArgs e )
@@ -103,19 +105,22 @@ namespace Nile.Windows
             MessageBox.Show(this, "Not implemented", "Help About", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
         }
         #endregion
-        private Product GetSelectedProduct()
+
+        private Product GetSelectedProduct ( )
         {
+            //Get the first selected row in the grid, if any
             if (dataGridView1.SelectedRows.Count > 0)
                 return dataGridView1.SelectedRows[0].DataBoundItem as Product;
 
             return null;
         }
+
         private void RefreshUI ()
         {
             //Get products
             var products = _database.GetAll();
             //products[0].Name = "Product A";
-
+            
             //Bind to grid
             dataGridView1.DataSource = products;
         }

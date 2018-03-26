@@ -83,6 +83,7 @@ namespace MovieLib.Windows
         private void OnMovieEdit ( object sende, EventArgs e )
         {
             //Get selected movie
+            
             var movie = GetSelectedMovie();
             if(movie == null)
             {
@@ -144,8 +145,8 @@ namespace MovieLib.Windows
         }
         private Movie GetSelectedMovie()
         {
-            if (dataGridView1.SelectedRows.Count > 0)
-                return dataGridView1.SelectedRows[0].DataBoundItem as Movie;
+            if (dataGridView2.SelectedRows.Count > 0)
+                return dataGridView2.SelectedRows[0].DataBoundItem as Movie;
 
             return null;
         }

@@ -17,6 +17,15 @@ namespace MovieLib.Windows
             InitializeComponent();
         }
 
+        public MovieDetailForm(string title) : this()
+        {
+            Text = title;
+        }
+        public MovieDetailForm(Movie movie) : this("Edit Movie")
+        {
+            Movie = movie;
+        }
+
         public Movie Movie { get; set; }
 
         protected override void OnLoad ( EventArgs e )
@@ -58,6 +67,7 @@ namespace MovieLib.Windows
             } else
                 Movie = newMovie;
 
+            
             DialogResult = DialogResult.OK;
             Close();
         }

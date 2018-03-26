@@ -4,6 +4,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,13 +12,14 @@ using System.Threading.Tasks;
 namespace MovieLib
 {
     /// <summary>Represents a movie.</summary>
-    public class Movie
+    public class Movie : IValidatableObject
     {
+        public int Id { get; set; }
         /// <summary>Gets or sets the description.</summary>
         public string Description
         {
             get { return _description ?? ""; }
-            set { _description = value; }
+            set { _description = value ?? ""; }
         }
 
         /// <summary>Determines if the movie is owned or not.</summary>
@@ -31,6 +33,22 @@ namespace MovieLib
         {
             get { return _title ?? ""; }
             set { _title = value; }
+        }
+        public IEnumerable<ValidationResult> Validate( ValidationContext validationContext)
+        {
+            var errors = new List<ValidationResult>();
+
+            //Title is required
+            if (String.IsNullOrEmpty(_title))
+                errors.Add(new ValidationResult("Title cannot be empty",
+                    new[] { nameof(Title) }));
+
+            //Length >= 0
+            if (Length < 0)
+                errors.Add(new ValidationResult("Length must be >= 0",
+                    new[] { nameof(Length) }));
+
+            return errors;
         }
 
         #region Private Members

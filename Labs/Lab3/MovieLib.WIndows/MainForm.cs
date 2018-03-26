@@ -22,6 +22,12 @@ namespace MovieLib.Windows
         {
             InitializeComponent();
         }
+        protected override void OnLoad( EventArgs e )
+        {
+            base.OnLoad(e);
+
+            RefreshUI();
+        }
 
         #region Event Handlers
         //Called when a cell is double clicked
@@ -146,7 +152,7 @@ namespace MovieLib.Windows
         private void RefreshUI()
         {
             var movies = _database.GetAll();
-            //movieBindingSource.DataSource = movies.ToList();
+            movieBindingSource.DataSource = movies.ToList();
         }
         private bool ShowConfirmation(string message, string title)
         {

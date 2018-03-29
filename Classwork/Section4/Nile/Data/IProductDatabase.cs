@@ -40,6 +40,6 @@ namespace Nile.Data
         /// A product with the same name already exists.
         /// The product does not exist.
         /// </remarks>
-        Product Update( Product product, out string message );                
+        Product Update( Product product );                
     }
 }

@@ -23,25 +23,19 @@ namespace Nile.Data
             var message = "";
 
             //Check for null
-            if (product == null)
-                throw new ArgumentNullException(nameof(product));
+            //if (product == null)
+            product = product ?? throw new ArgumentNullException(nameof(product));
 
             //Validate product 
-            var errors = product.Validate();
-            var error = errors.FirstOrDefault();
-            if (error != null)
-            {
-                message = error.ErrorMessage;
-                return null;
-            };
+            product.Validate();
 
             // Verify unique product
             var existing = GetProductByNameCore(product.Name);
             if (existing != null)
-            {
-                message = "Product already exists.";
-                return null;
-            };
+            //{
+            //    message = "Product already exists.";
+            //    return null;
+            //};
 
             message = null;
             return AddCore(product);
@@ -59,11 +53,13 @@ namespace Nile.Data
         public void Remove ( int id )
         {
             //TODO: Return an error if id <= 0
+            if (id <= 0)
+                    throw new ArgumentOutOfRangeException(nameof(id), "Id must be > 0");
 
-            if (id > 0)
-            {
+            //if (id > 0)
+            //{
                 RemoveCore(id);
-            };
+            
         }
 
         /// <summary>Edits an existing product.</summary>
@@ -74,41 +70,29 @@ namespace Nile.Data
         /// Returns an error if product is null, invalid, product name
         /// already exists or if the product cannot be found.
         /// </remarks>
-        public Product Update ( Product product, out string message )
+        public Product Update ( Product product )
         {
-            message = "";
+            
 
             //Check for null
             if (product == null)
-            {
-                message = "Product cannot be null.";
-                return null;
-            };
+                throw new ArgumentNullException(nameof(product));
+           
 
             //Validate product 
-            var errors = product.Validate();
-            var error = errors.FirstOrDefault();
-            if (error != null)
-            {
-                message = error.ErrorMessage;
-                return null;
-            };
+            product.Validate();
 
             // Verify unique product
             var existing = GetProductByNameCore(product.Name);
             if (existing != null && existing.Id != product.Id)
-            {
-                message = "Product already exists.";
-                return null;
-            };
+                throw new Exception("Product already exist");
+           
 
             //Find existing
             existing = existing ?? GetCore(product.Id);
             if (existing == null)
-            {
-                message = "Product not found.";
-                return null;
-            };
+                throw new ArgumentException("Product not found", nameof(product));
+           
 
             return UpdateCore(product);
         }

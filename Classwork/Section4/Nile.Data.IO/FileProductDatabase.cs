@@ -134,8 +134,9 @@ namespace Nile.Data.IO
                 };
 
                 return items;
-            }catch(Exception e)
+            } catch (Exception e)
             {
+                //Example of wrapping an exception to hide the details
                 throw new Exception("Failure loading data", e);
             };
         }
@@ -156,14 +157,16 @@ namespace Nile.Data.IO
                 };
 
                 writer.Close();
-                stream.Close();
-            }catch(ArgumentException e)
+                stream.Close();                
+            } catch (ArgumentException e)
             {
-                //throw e; Not right!
+                //Example of rethrowing an exception
+                //Never right!!!
                 //throw e;
                 throw;
-            }catch(Exception e)
+            } catch (Exception e)
             {
+                //Example of wrapping an exception to hide details
                 throw new Exception("Save failed", e);
             };
         }

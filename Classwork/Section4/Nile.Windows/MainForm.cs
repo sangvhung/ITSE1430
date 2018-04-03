@@ -183,12 +183,12 @@ namespace Nile.Windows
             try
             {
                 products = _database.GetAll();
-            }catch(Exception)
+            } catch (Exception)
             {
                 MessageBox.Show("Error loading products");
             };
 
-            productBindingSource.DataSource = products.ToList();
+            productBindingSource.DataSource = products?.ToList();
         }
 
         private bool ShowConfirmation ( string message, string title )

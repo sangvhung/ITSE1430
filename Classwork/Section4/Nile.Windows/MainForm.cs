@@ -166,14 +166,33 @@ namespace Nile.Windows
 
             RefreshUI();
         }
+        //private sealed class SelectedRowType
+        //{
+        //    public int index { get; set; }
+        //    public Product product { get; set; }
+        //}
 
         private Product GetSelectedProduct ( )
         {
+            //This is correct, just demoing something new...
             //Get the first selected row in the grid, if any
-            if (dataGridView1.SelectedRows.Count > 0)
-                return dataGridView1.SelectedRows[0].DataBoundItem as Product;
+            //var items = (from r in dataGridView1.SelectedRows.OfType<DataGridViewRow>()
+            //             select new SelectedRowType() {
+            //                 index = r.Index,
+            //                 Product = r.DataBoundItem as Product
+            //             }).FirstOrDefault();
+            var items = (from r in dataGridView1.SelectedRows.OfType<DataGridViewRow>()
+                         select new {
+                             index = r.Index,
+                             Product = r.DataBoundItem as Product
+                         }).FirstOrDefault();
 
-            return null;
+            return items.Product;
+
+            //if (dataGridView1.SelectedRows.Count > 0)
+            //    return dataGridView1.SelectedRows[0].DataBoundItem as Product;
+
+            //return null;
         }
 
         private void RefreshUI ()

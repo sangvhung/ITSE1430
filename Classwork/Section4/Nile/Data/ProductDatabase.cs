@@ -52,20 +52,19 @@ namespace Nile.Data
 
         /// <summary>Gets all products.</summary>
         /// <returns>The list of products.</returns>
-        public IEnumerable<Product> GetAll()
+        public IEnumerable<Product> GetAll ()
         {
-            //Option 2 - extension
+            // Option 2- extension
             //return GetAllCore()
-            //    .OrderBy(p => p.Name)
-            //    .ThenByDescending(p => p.Id)
-            //    .Select(p => p);
+            //            .OrderBy(p => p.Name)
+            //            .ThenByDescending(p => p.Id)
+            //            .Select(p => p);
 
-            //Option 1 - LINQ
+            // Option 1 - LINQ
             return from p in GetAllCore()
                    orderby p.Name, p.Id descending
-                   select p;
+                   select p;                                    .
         }
-                             
 
         /// <summary>Removes a product.</summary>
         /// <param name="id">The product ID.</param>

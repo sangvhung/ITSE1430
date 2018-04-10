@@ -22,41 +22,40 @@ namespace Nile.Data.Memory
 
         protected override Product GetCore( int id )
         {
-            //Option 4 - Combo
+            // Option 4 - Combo
             return (from p in _products
-                   where p.Id == id
-                   select p).FirstOrDefault();
+                    where p.Id == id
+                    select p).FirstOrDefault();
 
-            //Option 3 - LINQ
+            // Option 3 - LINQ
             //var items = from p in _products
             //            where p.Id == id
             //            select p;
+            //return items.FirstOrDefault();
 
-                //return items.FirstOrDefault();
+            // Option 2 - extension method
+            //return _products.FirstOrDefault(p => p.Id == id);
 
-                //Option 2 - extention method
-                //return _products.FirstOrDefault(prop => prop.Id == id);
+            // Option 1
+            //foreach (var product in _products)
+            //{
+            //    if (product.Id == id)
+            //        return product;
+            //};
 
-                //Option 1
-                //foreach (var product in _products)
-                //{
-                //    if (product.Id == id)
-                //        return product;
-                //};
-
-                //return null;
+            //return null;
         }
 
         protected override IEnumerable<Product> GetAllCore ()
         {
-            //Option 3
+            //Option 3 - LINQ
             return from p in _products
                    select Clone(p);
 
-            //Option 2
+            // Option 2 - extension
             //return _products.Select(p => Clone(p));
-
-            //Option 1
+            
+            // Option 1
             //foreach (var product in _products)
             //{
             //    if (product != null)
@@ -83,15 +82,16 @@ namespace Nile.Data.Memory
 
         protected override Product GetProductByNameCore( string name )
         {
-            //Option 3
+            // Option 3 - LINQ
             return (from p in _products
-                   where String.Compare(p.Name, name, true) == 0
-                   select p).FirstOrDefault();
-            
-            //Option 2
-            //return _products.FirstOrDefault(p => String.Compare(p.Name, name, true) == 0);
+                    where String.Compare(p.Name, name, true) == 0
+                    select p).FirstOrDefault();
 
-            //Option 1
+            // Option 2 - extension
+            //return _products.FirstOrDefault(p => 
+            //            String.Compare(p.Name, name, true) == 0);
+
+            // Option 1 
             //foreach (var product in _products)
             //{
             //    if (String.Compare(product.Name, name, true) == 0)

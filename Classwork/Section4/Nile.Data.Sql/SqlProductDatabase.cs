@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -57,9 +58,32 @@ namespace Nile.Data.Sql
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
                 conn.Open();
-            };
 
-            return items;
+                var ds = new DataSet();
+
+                var da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+
+                da.Fill(ds);
+
+                if (ds.Tables.Count == 1)
+                {
+                    foreach (var row in ds.Tables[0].Rows.OfType<DataRow>())
+                    {
+                        var product = new Product() {
+                            Id = Convert.ToInt32(row["Id"]),
+                            Name = row.Field<string>("Name"),
+                            Description = row.Field<string>("Description"),
+                            Price = row.Field<decimal>("Price"),
+                            IsDiscontinued = row.Field<bool>("IsDiscontinued")
+                        };
+
+                        items.Add(product);
+                    };
+                };
+
+                return items;
+            }
         }
 
         protected override Product GetCore( int id )
@@ -72,14 +96,51 @@ namespace Nile.Data.Sql
                 cmd.Parameters.Add(new SqlParameter("@id", id));
 
                 conn.Open();
-            };
 
-            return null;
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                        return ReadData(reader);
+                };
+                return null;
+            };
         }
+
+
+
 
         protected override Product GetProductByNameCore( string name )
         {
-            throw new NotImplementedException();
+            using (var conn = new SqlConnection(_connectionString))
+            {
+                var cmd = new SqlCommand("GetAllProducts", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                
+                conn.Open();
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var product = ReadData(reader);
+                        if(String.Compare(product.Name, name, true) == 0)
+
+                        return product;
+                    };
+                };
+                return null;
+            }
+        }
+
+        private static Product ReadData( SqlDataReader reader )
+        {
+            return new Product() {
+                Id = Convert.ToInt32(reader["Id"]),
+                Name = reader.GetFieldValue<string>(1),
+                Price = reader.GetDecimal(2),
+                Description = reader.GetString(3),
+                IsDiscontinued = reader.GetBoolean(4)
+            };
         }
 
         protected override void RemoveCore( int id )

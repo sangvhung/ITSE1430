@@ -1,24 +1,25 @@
 ﻿/*
- * ITSE 1430
- * Sample implementation
+ * ITSE 1430 Lab3
+ * Sang Hung
  */
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace MovieLib
 {
     /// <summary>Represents a movie.</summary>
     public class Movie : IValidatableObject
     {
-        /// <summary>Gets or sets the ID of the movie.</summary>
         public int Id { get; set; }
-
         /// <summary>Gets or sets the description.</summary>
         public string Description
         {
             get { return _description ?? ""; }
-            set { _description = value; }
+            set { _description = value ?? ""; }
         }
 
         /// <summary>Determines if the movie is owned or not.</summary>
@@ -33,25 +34,27 @@ namespace MovieLib
             get { return _title ?? ""; }
             set { _title = value; }
         }
-
-        /// <summary>Validates the object.</summary>
-        /// <param name="validationContext">The validation context.</param>
-        /// <returns>The validation results.</returns>
-        public IEnumerable<ValidationResult> Validate ( ValidationContext validationContext )
+        public IEnumerable<ValidationResult> Validate( ValidationContext validationContext)
         {
-            //Title is required
-            if (Title.Length == 0)
-                yield return new ValidationResult("Title is required.", new[] { "Title" });
+            var errors = new List<ValidationResult>();
 
-            //Length must be >= 0.
+            //Title is required
+            if (String.IsNullOrEmpty(_title))
+                errors.Add(new ValidationResult("Title cannot be empty",
+                    new[] { nameof(Title) }));
+
+            //Length >= 0
             if (Length < 0)
-                yield return new ValidationResult("Length must be >= 0.", new[] { "Length" });
+                errors.Add(new ValidationResult("Length must be >= 0",
+                    new[] { nameof(Length) }));
+
+            return errors;
         }
 
         #region Private Members
 
-        private string _title, _description;        
-
+        private string _title, _description;
+        
         #endregion
     }
 }

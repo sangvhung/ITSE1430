@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9F3A35B1-A83E-4982-88D4-86F6FCF367A9}</ProjectGuid>
+    <ProjectGuid>{366440CC-6AEB-407B-A8BB-975A07545B60}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MovieLib.Data.Memory</RootNamespace>
-    <AssemblyName>MovieLib.Data.Memory</AssemblyName>
+    <RootNamespace>MovieLib.Data.Sql</RootNamespace>
+    <AssemblyName>MovieLib.Data.Sql</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MemoryMovieDatabase.cs" />
+    <Compile Include="SqlMovieDatabase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

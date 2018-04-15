@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MovieLib.Data.Memory")]
+[assembly: AssemblyTitle("MovieLib.Data.Sql")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MovieLib.Data.Memory")]
+[assembly: AssemblyProduct("MovieLib.Data.Sql")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("9f3a35b1-a83e-4982-88d4-86f6fcf367a9")]
+[assembly: Guid("366440cc-6aeb-407b-a8bb-975a07545b60")]
 
 // Version information for an assembly consists of the following four values:
 //

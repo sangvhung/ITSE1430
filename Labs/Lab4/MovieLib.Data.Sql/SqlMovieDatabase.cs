@@ -70,7 +70,7 @@ namespace MovieLib.Data.Sql
                 {
                     foreach (var row in ds.Tables[0].Rows.OfType<DataRow>())
                     {
-                        var product = new Movie()
+                        var movie = new Movie()
                         {
                             Id = Convert.ToInt32(row["Id"]),
                             Title = row.Field<string>("Title"),
@@ -79,7 +79,7 @@ namespace MovieLib.Data.Sql
                             IsOwned = row.Field<bool>("IsOwned")
                         };
 
-                        items.Add(product);
+                        items.Add(movie);
                     };
                 };
 

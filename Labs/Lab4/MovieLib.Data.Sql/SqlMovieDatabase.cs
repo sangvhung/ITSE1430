@@ -159,7 +159,7 @@ namespace MovieLib.Data.Sql
         {
             using (var conn = new SqlConnection(_connectionString))
             {
-                var cmd = new SqlCommand("AddMovie", conn);
+                var cmd = new SqlCommand("UpdateMovie", conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@title", movie.Title);

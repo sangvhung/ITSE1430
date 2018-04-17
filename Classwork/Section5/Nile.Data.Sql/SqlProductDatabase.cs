@@ -6,12 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MovieLib.Data.Sql
+namespace Nile.Data.Sql
 {
-    public class SqlMovieDatabase : MovieDatabase
+    public class SqlProductDatabase : ProductDatabase
     {
         private readonly string _connectionString;
-        public SqlMovieDatabase( string connectionString )
+        public SqlProductDatabase(string connectionString)
         {
             if (connectionString == null)
                 throw new ArgumentException(nameof(connectionString));
@@ -20,41 +20,41 @@ namespace MovieLib.Data.Sql
 
             _connectionString = connectionString;
         }
-        protected override Movie AddCore( Movie movie )
+        protected override Product AddCore( Product product )
         {
             using (var conn = new SqlConnection(_connectionString))
             {
-                var cmd = new SqlCommand("AddMovie", conn);
+                var cmd = new SqlCommand("AddProduct", conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@title", movie.Title);
-                cmd.Parameters.AddWithValue("@description", movie.Description);
-                cmd.Parameters.AddWithValue("@length", movie.Length);
+             
+                cmd.Parameters.AddWithValue("@name", product.Name);
+                cmd.Parameters.AddWithValue("@price", product.Price);
+                cmd.Parameters.AddWithValue("@description", product.Description);
 
                 var parm = cmd.CreateParameter();
-                parm.ParameterName = "@isOwned";
+                parm.ParameterName = "@isDiscontinued";
                 parm.DbType = System.Data.DbType.Boolean;
-                parm.Value = movie.IsOwned;
+                parm.Value = product.IsDiscontinued;
                 cmd.Parameters.Add(parm);
 
                 conn.Open();
                 var result = cmd.ExecuteScalar();
 
                 var id = Convert.ToInt32(result);
-                movie.Id = id;
-            }
+                product.Id = id;
+            };
 
-            return movie;
-
+            return product;
         }
 
-        protected override IEnumerable<Movie> GetAllCore()
+        protected override IEnumerable<Product> GetAllCore()
         {
-            var items = new List<Movie>();
+            var items = new List<Product>();
 
             using (var conn = new SqlConnection(_connectionString))
             {
-                var cmd = new SqlCommand("GetAllMovies", conn);
+                var cmd = new SqlCommand("GetAllProducts", conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
                 conn.Open();
@@ -70,16 +70,15 @@ namespace MovieLib.Data.Sql
                 {
                     foreach (var row in ds.Tables[0].Rows.OfType<DataRow>())
                     {
-                        var movie = new Movie()
-                        {
+                        var product = new Product() {
                             Id = Convert.ToInt32(row["Id"]),
-                            Title = row.Field<string>("Title"),
+                            Name = row.Field<string>("Name"),
                             Description = row.Field<string>("Description"),
-                            Length = row.Field<int>("Length"),
-                            IsOwned = row.Field<bool>("IsOwned")
+                            Price = row.Field<decimal>("Price"),
+                            IsDiscontinued = row.Field<bool>("IsDiscontinued")
                         };
 
-                        items.Add(movie);
+                        items.Add(product);
                     };
                 };
 
@@ -87,11 +86,11 @@ namespace MovieLib.Data.Sql
             }
         }
 
-        protected override Movie GetCore( int id )
+        protected override Product GetCore( int id )
         {
             using (var conn = new SqlConnection(_connectionString))
             {
-                var cmd = new SqlCommand("GetMovie", conn);
+                var cmd = new SqlCommand("GetProduct", conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
                 cmd.Parameters.Add(new SqlParameter("@id", id));
@@ -107,37 +106,40 @@ namespace MovieLib.Data.Sql
             };
         }
 
-        protected override Movie GetMovieByNameCore( string title )
+
+
+
+        protected override Product GetProductByNameCore( string name )
         {
             using (var conn = new SqlConnection(_connectionString))
             {
-                var cmd = new SqlCommand("GetAllMovies", conn);
+                var cmd = new SqlCommand("GetAllProducts", conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
-
+                
                 conn.Open();
 
                 using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        var movie = ReadData(reader);
-                        if (String.Compare(movie.Title, title, true) == 0)
+                        var product = ReadData(reader);
+                        if(String.Compare(product.Name, name, true) == 0)
 
-                            return movie;
+                        return product;
                     };
                 };
                 return null;
             }
         }
-        private static Movie ReadData( SqlDataReader reader )
+
+        private static Product ReadData( SqlDataReader reader )
         {
-            return new Movie()
-            {
+            return new Product() {
                 Id = Convert.ToInt32(reader["Id"]),
-                Title = reader.GetFieldValue<string>(1),
-                Description = reader.GetString(2),
-                Length = reader.GetInt32(3),
-                IsOwned = reader.GetBoolean(4)
+                Name = reader.GetFieldValue<string>(1),
+                Price = reader.GetDecimal(2),
+                Description = reader.GetString(3),
+                IsDiscontinued = reader.GetBoolean(4)
             };
         }
 
@@ -145,7 +147,7 @@ namespace MovieLib.Data.Sql
         {
             using (var conn = new SqlConnection(_connectionString))
             {
-                var cmd = new SqlCommand("RemoveMovie", conn);
+                var cmd = new SqlCommand("RemoveProduct", conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
                 cmd.Parameters.Add(new SqlParameter("@id", id));
@@ -155,30 +157,29 @@ namespace MovieLib.Data.Sql
             };
         }
 
-        protected override Movie UpdateCore( Movie movie )
+        protected override Product UpdateCore( Product product )
         {
             using (var conn = new SqlConnection(_connectionString))
             {
-                var cmd = new SqlCommand("UpdateMovie", conn);
+                var cmd = new SqlCommand("UpdateProduct", conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-                cmd.Parameters.Add(new SqlParameter("@id", movie.Id));
-                cmd.Parameters.AddWithValue("@title", movie.Title);
-                cmd.Parameters.AddWithValue("@description", movie.Description);
-                cmd.Parameters.AddWithValue("@length", movie.Length);
+                cmd.Parameters.Add(new SqlParameter("@id", product.Id));
+                cmd.Parameters.AddWithValue("@name", product.Name);
+                cmd.Parameters.AddWithValue("@price", product.Price);
+                cmd.Parameters.AddWithValue("@description", product.Description);
 
                 var parm = cmd.CreateParameter();
-                parm.ParameterName = "@isOwned";
+                parm.ParameterName = "@isDiscontinued";
                 parm.DbType = System.Data.DbType.Boolean;
-                parm.Value = movie.IsOwned;
+                parm.Value = product.IsDiscontinued;
                 cmd.Parameters.Add(parm);
 
                 conn.Open();
-                cmd.ExecuteScalar();
-                
+                cmd.ExecuteNonQuery();
             };
 
-            return movie;
+            return product;
         }
     }
 }

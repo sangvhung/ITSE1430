@@ -135,8 +135,8 @@ namespace MovieLib.Data.Sql
             {
                 Id = Convert.ToInt32(reader["Id"]),
                 Title = reader.GetFieldValue<string>(1),
-                Length = reader.GetInt32(2),
-                Description = reader.GetString(3),
+                Description = reader.GetString(2),
+                Length = reader.GetInt32(3),
                 IsOwned = reader.GetBoolean(4)
             };
         }

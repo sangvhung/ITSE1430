@@ -10,8 +10,17 @@ namespace Nile.Data.IO
     {
         #region Construction
 
+        /// <summary>Initializes an instance of the <see cref="FileProductDatabase"/> class.</summary>
+        /// <param name="filename">The filename.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="filename"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="filename"/> is empty.</exception>
         public FileProductDatabase ( string filename )
         {
+            if (filename == null)
+                throw new ArgumentNullException(nameof(filename));
+            if (String.IsNullOrEmpty(filename))
+                throw new ArgumentException("Filename cannot be empty", nameof(filename));
+
             _filename = filename;
         }
         #endregion
@@ -32,7 +41,6 @@ namespace Nile.Data.IO
         {
             EnsureInitialized();
 
-            //LoadData();
             return _items;
         }        
 
@@ -40,39 +48,15 @@ namespace Nile.Data.IO
         {
             EnsureInitialized();
 
-            //Use Enumerable.FirstOrDefault
             return _items.FirstOrDefault(i => i.Id == id);
-            //foreach (var item in _items)
-            //{
-            //    if (item.Id == id)
-            //        return item;
-            //};
-
-            //return null;
         }
         
-        //Compiler converts previous lambda into a private type with
-        //this method, effectively
-        //private bool IsId ( Product product )
-        //{
-        //    return product.Id == id;
-        //}
-
         protected override Product GetProductByNameCore( string name )
         {
             EnsureInitialized();
 
-            //Use Enumerable.FirstOrDefault
             return _items.FirstOrDefault(
                     i => String.Compare(i.Name, name, true) == 0);
-
-            //foreach (var item in _items)
-            //{
-            //    if (String.Compare(item.Name, name, true) == 0)
-            //        return item;
-            //};
-
-            //return null;
         }
 
         protected override void RemoveCore( int id )
@@ -110,16 +94,8 @@ namespace Nile.Data.IO
             {
                 _items = LoadData();
 
-                //_id = 0;
-                //foreach (var item in _items)
-                //{
-                //    if (item.Id > _id)
-                //        _id = item.Id;
-                //};
-                //Using Enumerable.Any
                 if (_items.Any())
                 {
-                    //Using Enumerable.Max
                     _id = _items.Max(i => i.Id);
                     ++_id;
                 };
@@ -138,7 +114,6 @@ namespace Nile.Data.IO
 
                 var lines = File.ReadAllLines(_filename);
 
-                //Could do with Enumerable.Select
                 foreach (var line in lines)
                 {
                     var fields = line.Split(',');
@@ -157,7 +132,6 @@ namespace Nile.Data.IO
                 return items;
             } catch (Exception e)
             {
-                //Example of wrapping an exception to hide the details
                 throw new Exception("Failure loading data", e);
             };
         }
@@ -167,7 +141,6 @@ namespace Nile.Data.IO
             using (var stream = File.OpenWrite(_filename))
             using (var writer = new StreamWriter(stream))
             { 
-                //Not easily doable with Enumerable, stick with foreach
                 foreach (var item in _items)
                 {
                     var line = $"{item.Id},{item.Name},{item.Description}," +
@@ -197,8 +170,7 @@ namespace Nile.Data.IO
             } catch (ArgumentException e)
             {
                 //Example of rethrowing an exception
-                //Never right!!!
-                //throw e;
+                //throw e;  never right!!
                 throw;
             } catch (Exception e)
             {
@@ -213,19 +185,9 @@ namespace Nile.Data.IO
 
         private void SaveDataNonstream ()
         {
-            //Using Enumerable.Select
             var lines = _items.Select(item => 
                             $"{item.Id},{item.Name},{item.Description}," +
                             $"{item.Price},{(item.IsDiscontinued ? 1 : 0)}");
-
-            //var lines = new List<string>();
-
-            //foreach (var item in _items)
-            //{
-            //    var line = $"{item.Id},{item.Name},{item.Description}," +
-            //               $"{item.Price},{(item.IsDiscontinued ? 1 : 0)}";
-            //    lines.Add(line);
-            //};
 
             File.WriteAllLines(_filename, lines);
         }

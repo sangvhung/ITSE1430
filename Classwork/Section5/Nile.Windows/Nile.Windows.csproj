@@ -100,7 +100,7 @@
       <Name>Nile.Data.Memory</Name>
     </ProjectReference>
     <ProjectReference Include="..\Nile.Data.Sql\Nile.Data.Sql.csproj">
-      <Project>{f2153529-4895-43cb-b962-cd2e3ec37946}</Project>
+      <Project>{161e4a92-d946-48a5-b787-c829797ab7a2}</Project>
       <Name>Nile.Data.Sql</Name>
     </ProjectReference>
     <ProjectReference Include="..\Nile\Nile.csproj">

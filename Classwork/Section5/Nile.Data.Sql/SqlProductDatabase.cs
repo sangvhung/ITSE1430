@@ -1,4 +1,7 @@
-﻿using System;
+﻿/* 
+ * ITSE 1430
+ */
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -8,18 +11,24 @@ using System.Threading.Tasks;
 
 namespace Nile.Data.Sql
 {
+    /// <summary>Provides an implementation of <see cref="IProductDatabase"/> using SQL Server.</summary>
     public class SqlProductDatabase : ProductDatabase
     {
-        private readonly string _connectionString;
-        public SqlProductDatabase(string connectionString)
+        /// <summary>Initializes an instance of the <see cref="SqlProductDatabase"/> class.</summary>
+        /// <param name="connectionString">The connection string.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="connectionString"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="connectionString"/> is empty.</exception>
+        public SqlProductDatabase ( string connectionString )
         {
             if (connectionString == null)
-                throw new ArgumentException(nameof(connectionString));
+                throw new ArgumentNullException(nameof(connectionString));
             if (connectionString == "")
-                throw new ArgumentException("Connection string cannot be empty", nameof(connectionString));
+                throw new ArgumentException("Connection string cannot be empty.",
+                                            nameof(connectionString));
 
             _connectionString = connectionString;
         }
+
         protected override Product AddCore( Product product )
         {
             using (var conn = new SqlConnection(_connectionString))
@@ -27,7 +36,6 @@ namespace Nile.Data.Sql
                 var cmd = new SqlCommand("AddProduct", conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-             
                 cmd.Parameters.AddWithValue("@name", product.Name);
                 cmd.Parameters.AddWithValue("@price", product.Price);
                 cmd.Parameters.AddWithValue("@description", product.Description);
@@ -81,9 +89,9 @@ namespace Nile.Data.Sql
                         items.Add(product);
                     };
                 };
+            };
 
-                return items;
-            }
+            return items;
         }
 
         protected override Product GetCore( int id )
@@ -102,12 +110,10 @@ namespace Nile.Data.Sql
                     if (reader.Read())
                         return ReadData(reader);
                 };
-                return null;
             };
+
+            return null;
         }
-
-
-
 
         protected override Product GetProductByNameCore( string name )
         {
@@ -115,7 +121,7 @@ namespace Nile.Data.Sql
             {
                 var cmd = new SqlCommand("GetAllProducts", conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                
+
                 conn.Open();
 
                 using (var reader = cmd.ExecuteReader())
@@ -123,25 +129,23 @@ namespace Nile.Data.Sql
                     while (reader.Read())
                     {
                         var product = ReadData(reader);
-                        if(String.Compare(product.Name, name, true) == 0)
-
-                        return product;
+                        if (String.Compare(product.Name, name, true) == 0)
+                            return product;
                     };
                 };
-                return null;
-            }
+            };
+
+            return null;
         }
 
         private static Product ReadData( SqlDataReader reader )
-        {
-            return new Product() {
-                Id = Convert.ToInt32(reader["Id"]),
-                Name = reader.GetFieldValue<string>(1),
-                Price = reader.GetDecimal(2),
-                Description = reader.GetString(3),
-                IsDiscontinued = reader.GetBoolean(4)
-            };
-        }
+                        => new Product() {
+                                Id = Convert.ToInt32(reader["Id"]),
+                                Name = reader.GetFieldValue<string>(1),
+                                Price = reader.GetDecimal(2),
+                                Description = reader.GetString(3),                
+                                IsDiscontinued = reader.GetBoolean(4)
+                            };
 
         protected override void RemoveCore( int id )
         {
@@ -181,5 +185,10 @@ namespace Nile.Data.Sql
 
             return product;
         }
+
+        #region Private Members
+
+        private readonly string _connectionString;
+        #endregion
     }
 }

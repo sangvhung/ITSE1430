@@ -22,30 +22,15 @@ namespace Nile.Data
         /// with the same name already exists.
         /// </remarks>
         public Product Add ( Product product )
-        {
-            //Check for null
-            //if (product == null)
-                //throw new ArgumentNullException(nameof(product));
+        {            
+            //if (product == null) throw new ArgumentNullException(nameof(product));
             product = product ?? throw new ArgumentNullException(nameof(product));
-
-            //Validate product 
             product.Validate();
-            //var errors = product.TryValidate();
-            //var error = errors.FirstOrDefault();
-            //if (error != null)
-            //{
-            //    message = error.ErrorMessage;
-            //    return null;
-            //};
 
             // Verify unique product
             var existing = GetProductByNameCore(product.Name);
             if (existing != null)
                 throw new Exception("Product already exists");
-            //{
-            //    message = "Product already exists.";
-            //    return null;
-            //};
             
             return AddCore(product);
         }
@@ -54,16 +39,9 @@ namespace Nile.Data
         /// <returns>The list of products.</returns>
         public IEnumerable<Product> GetAll ()
         {
-            // Option 2- extension
-            //return GetAllCore()
-            //            .OrderBy(p => p.Name)
-            //            .ThenByDescending(p => p.Id)
-            //            .Select(p => p);
-
-            // Option 1 - LINQ
             return from p in GetAllCore()
                    orderby p.Name, p.Id descending
-                   select p;                                    
+                   select p;                                   
         }
 
         /// <summary>Removes a product.</summary>
@@ -75,10 +53,7 @@ namespace Nile.Data
             if (id <= 0)
                 throw new ArgumentOutOfRangeException(nameof(id), "Id must be > 0");
 
-            //if (id > 0)
-            //{
-                RemoveCore(id);
-            //};
+            RemoveCore(id);
         }
 
         /// <summary>Edits an existing product.</summary>
@@ -97,42 +72,23 @@ namespace Nile.Data
             //Check for null
             if (product == null)
                 throw new ArgumentNullException(nameof(product));
-            //{
-            //    message = "Product cannot be null.";
-            //    return null;
-            //};
 
             //Validate product 
             product.Validate();
-            //var errors = product.TryValidate();
-            //var error = errors.FirstOrDefault();
-            //if (error != null)
-            //{
-            //    message = error.ErrorMessage;
-            //    return null;
-            //};
 
             // Verify unique product
             var existing = GetProductByNameCore(product.Name);
             if (existing != null && existing.Id != product.Id)
                 throw new Exception("Product already exists");
-            //{
-            //    message = "Product already exists.";
-            //    return null;
-            //};
 
             //Find existing
             existing = existing ?? GetCore(product.Id);
             if (existing == null)
                 throw new ArgumentException("Product not found", nameof(product));
-            //{
-            //    message = "Product not found.";
-            //    return null;
-            //};
 
             return UpdateCore(product);
         }
-
+                
         protected abstract Product AddCore( Product product );
         protected abstract IEnumerable<Product> GetAllCore();
         protected abstract Product GetCore( int id );

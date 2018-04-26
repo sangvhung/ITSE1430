@@ -23,6 +23,10 @@ namespace Nile
             return errors;
         }
 
+
+        /// <summary>Validates an object and all properties.</summary>
+        /// <param name="value">The object to validate.</param>
+        /// <exception cref="ValidationException">Validation failed.</exception>
         public static void Validate ( this IValidatableObject source )
         {
             var context = new ValidationContext(source);

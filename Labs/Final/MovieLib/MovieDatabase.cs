@@ -46,7 +46,8 @@ namespace MovieLib.Data
 
         /// <summary>Gets all the movies.</summary>
         /// <returns>The list of movies.</returns>
-        public IEnumerable<Movie> Getall ()
+        //CR1 Sang- Changed spelling for GetAll() to compile code
+        public IEnumerable<Movie> GetAll ()
         {
             return GetAllCore();
         }
@@ -58,6 +59,7 @@ namespace MovieLib.Data
         /// If the movie does not exist then nothing happens.
         /// </remarks>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="id"/> is less than or equal to zero.</exception>
+        
         public bool Remove ( int id )
         {
             if (id <= 0)

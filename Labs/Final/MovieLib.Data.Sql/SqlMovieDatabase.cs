@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
@@ -27,7 +28,8 @@ namespace MovieLib.Data.Sql
         /// <summary>Adds a movie.</summary>
         /// <param name="movie">The movie to add.</param>
         /// <returns>The added movie.</returns>
-        protected Movie AddCore ( Movie movie )
+        //CR1- Sang- Added override to Line31 for code to compile
+        protected override Movie AddCore ( Movie movie )
         {
             using (var conn = new SqlConnection(_connectionString))
             {
@@ -67,6 +69,7 @@ namespace MovieLib.Data.Sql
             {
                 var cmd = conn.CreateStoredProcedureCommand("GetMovie");
                 cmd.Parameters.AddWithValue("@id", id);
+                
 
                 conn.Open();
                 return cmd.ExecuteReaderWithSingleResult(ReadMovie);
@@ -82,6 +85,8 @@ namespace MovieLib.Data.Sql
                 var cmd = conn.CreateStoredProcedureCommand("GetAllMovies");
 
                 conn.Open();
+
+                
 
                 return cmd.ExecuteReaderWithResults(ReadMovie);
             };
@@ -113,9 +118,10 @@ namespace MovieLib.Data.Sql
                 cmd.Parameters.AddWithValue("@title", movie.Title);
                 cmd.Parameters.AddWithValue("@description", movie.Description);
                 cmd.Parameters.AddWithValue("@length", movie.Length);
+                cmd.Parameters.AddWithValue("@isOwned", movie.IsOwned);
                 cmd.Parameters.AddWithValue("@rating", movie.Rating);
                 cmd.Parameters.AddWithValue("@releaseYear", movie.ReleaseYear);
-                cmd.Parameters.AddWithValue("@isOwned", movie.IsOwned);
+                
 
                 conn.Open();
                 cmd.ExecuteNonQuery();                
@@ -125,8 +131,8 @@ namespace MovieLib.Data.Sql
         }
 
         #region Private Members
-
-        private Movie ReadMovie ( DbDataReader reader )
+        //CR1 Sang- Added static to line 130 and fixed index
+        private static Movie ReadMovie ( DbDataReader reader )
         {
             return new Movie()
             {
@@ -135,8 +141,7 @@ namespace MovieLib.Data.Sql
                 Description = reader.GetString(2),
                 Length = reader.GetInt32(3),
                 IsOwned = reader.GetBoolean(4),
-                Rating = (Rating)reader.GetInt32(5),
-                ReleaseYear = (int)reader.GetInt16(6)
+                
             };
         }
 

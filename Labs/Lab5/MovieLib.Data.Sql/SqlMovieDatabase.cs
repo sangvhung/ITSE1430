@@ -133,11 +133,13 @@ namespace MovieLib.Data.Sql
         {
             return new Movie()
             {
-                Id = Convert.ToInt32(reader["Id"]),
-                Title = reader.GetFieldValue<string>(1),
+                Id = reader.GetInt32(0),
+                Title = reader.GetString(1),
                 Description = reader.GetString(2),
                 Length = reader.GetInt32(3),
-                IsOwned = reader.GetBoolean(4)
+                IsOwned = reader.GetBoolean(4),
+                Rating = (Rating)reader.GetInt32(5),
+                ReleaseYear = (int)reader.GetInt16(6)
             };
         }
 
